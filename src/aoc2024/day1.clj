@@ -4,15 +4,11 @@
             [org.candelbio.multitool.cljcore :as ju])
   )
 
-(defn split-tokens
-  [s]
-  (s/split s #" +"))
-
 (defn data
   []
   (let [rawish (->> "data/day1.txt"
                     ju/file-lines
-                    (map split-tokens))
+                    (map au/split-tokens))
         a (sort (map (comp u/coerce-numeric first) rawish))
         b (sort (map (comp u/coerce-numeric second) rawish))]
     [a b]))
