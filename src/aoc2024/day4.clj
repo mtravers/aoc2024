@@ -2,41 +2,23 @@
   (:require [clojure.string :as s]
             [org.candelbio.multitool.core :as u]
             [org.candelbio.multitool.cljcore :as ju]
+            [aoc2024.utils :as au]
             ))
 
-(defn adata
-  [data]
-  (mapv vec data))
-
-(defn adims
-  [data]
-  [(count (first data)) (count data)])
-
-(def arr (adata (ju/file-lines "data/day4.txt")))
-
-(def arr (adata (ju/file-lines "data/day4-x.txt")))
-
-(defn in-bounds
-  [data x y]
-  (let [[xs ys] (adims data)]
-    (and (< -1 x xs) (< -1 y ys))))
-
-(defn rget
-  [data x y]
-  (get-in data [y x]))
+(def arr (au/adata (ju/file-lines "data/day4.txt")))
 
 (defn is-string?
   [s x y dx dy]
   (cond (empty? s) true
-        (not (in-bounds arr x y)) false
-        :else (and (= (first s) (rget arr x y))
+        (not (au/in-bounds? arr x y)) false
+        :else (and (= (first s) (au/rget arr x y))
                    (is-string? (rest s) (+ x dx) (+ y dy) dx dy))))
 
 (defn find-string-1
   [string dx dy]
   (let [s (into [] string)
         counter (atom 0)
-        dims (adims arr)]
+        dims (au/adims arr)]
     (doseq [x (range (first dims))
             y (range (second dims))]
       (when (is-string? s x y dx dy)
@@ -53,17 +35,15 @@
      (find-string-1 s -1 1)
      (find-string-1 s -1 0)
      (find-string-1 s -1 -1)))
-     
-    
-    
 
 ;;; Part 2
 
 (def diags
   {[1 1] [[0 2 1 -1] [2 0 -1 1]]
    [-1 -1] [[0 -2 -1 1] [-2 0 1 -1]]
-   [1 0] [[1 -1 0 1] [1 1 0 -1]]
-   [-1 0] [[-1 -1 0 1] [-1 1 0 -1]]
+   ;; Entirely unnecessary it turns out
+   ;; [1 0] [[1 -1 0 1] [1 1 0 -1]]
+   ;; [-1 0] [[-1 -1 0 1] [-1 1 0 -1]]
    ;; [0 1] [[-1 1 1 0] [1 1  -1 0]]
    })
 

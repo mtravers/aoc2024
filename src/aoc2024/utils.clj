@@ -11,3 +11,22 @@
 (defn split-tokens-numeric
   [s]
   (map u/coerce-numeric (split-tokens s)))
+
+(defn adata
+  [data]
+  (mapv vec data))
+
+(defn adims
+  [data]
+  [(count (first data)) (count data)])
+
+(defn in-bounds?
+  [data x y]
+  (let [[xs ys] (adims data)]
+    (and (< -1 x xs) (< -1 y ys))))
+
+(defn rget
+  [data x y]
+  (get-in data [y x]))
+
+
