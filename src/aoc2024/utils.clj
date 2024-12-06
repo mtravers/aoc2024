@@ -30,3 +30,10 @@
   (get-in data [y x]))
 
 
+(defn delete-pos
+  [seq i]
+  (into (subvec seq 0 i) (subvec seq (inc i))))
+
+(defn delete-elt
+  [seq elt]
+  (u/remove= elt seq))
