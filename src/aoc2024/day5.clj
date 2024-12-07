@@ -5,9 +5,7 @@
             [aoc2024.utils :as au]
             ))
 
-(defn split-nums
-  [s re]
-  (mapv u/coerce-numeric (s/split s re)))
+
 
 (defn get-data
   []
