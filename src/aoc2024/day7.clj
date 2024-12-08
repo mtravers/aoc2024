@@ -22,16 +22,12 @@
   []
   (reduce + (map first (filter works? data))))
 
-(defn ncat
-  [a b]
-  (u/coerce-numeric (str a b)))
-
 (defn works2?
   ([v a & rst]
    (if rst
      (or (apply works2? v (* a (first rst)) (rest rst))
          (apply works2? v (+ a (first rst)) (rest rst))
-         (apply works2? v (ncat a (first rst)) (rest rst)))
+         (apply works2? v (au/ncat a (first rst)) (rest rst)))
      (= v a)))
   ([x]
    (apply works2? x)))

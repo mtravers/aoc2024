@@ -26,10 +26,6 @@
   [seq rules]
   (every? #(not (contains? rules %)) (seq-pairs seq)))
 
-(defn middle-elt
-  [s]
-  (nth s (/ (count s) 2)))
-
 (defn p1
   []
   (let [[rules seqs] (get-data)
