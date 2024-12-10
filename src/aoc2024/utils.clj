@@ -56,6 +56,15 @@
   [data]
   [(count (first data)) (count data)])
 
+(defn amap
+  [f a]
+  (mapv #(mapv f %) a))
+
+
+(defn chari
+  [c]
+  (- (int c) (int \0)))
+
 (defn all-points
   [data]
   (for [i (range (first (adims data)))
