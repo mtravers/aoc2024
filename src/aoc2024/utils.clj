@@ -60,6 +60,8 @@
   [f a]
   (mapv #(mapv f %) a))
 
+(def p+ (u/vectorize +))
+(def p- (u/vectorize -))
 
 (defn chari
   [c]
@@ -79,8 +81,10 @@
    (in-bounds? data (first p) (second p))))
 
 (defn rget
-  [data x y]
-  (get-in data [y x]))
+  ([data x y]
+   (get-in data [y x]))
+  ([data [x y]]
+   (get-in data [y x])))
 
 (defn rset
   [data x y v]
@@ -114,6 +118,5 @@
 (defn delete-elt
   [seq elt]
   (u/remove= elt seq))
-
 
 
