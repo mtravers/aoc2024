@@ -102,15 +102,6 @@
    arr))
 
 
-
-
-
-
-
-
-
-
-
 (defn delete-pos
   [seq i]
   (into (subvec seq 0 i) (subvec seq (inc i))))
