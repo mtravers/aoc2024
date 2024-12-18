@@ -87,8 +87,10 @@
    (get-in data [y x])))
 
 (defn rset
-  [data x y v]
-  (assoc-in data [y x] v))
+  ([data x y v]
+   (assoc-in data [y x] v))
+  ([data [x y] v]
+   (assoc-in data [y x] v)))
 
 (defn afind
   [arr c]
@@ -101,6 +103,10 @@
        [j i]))
    arr))
 
+(defn afind-all
+  [arr c]
+  (filter #(= c (rget arr %)) (all-points arr)))
+
 
 (defn delete-pos
   [seq i]
@@ -111,3 +117,11 @@
   (u/remove= elt seq))
 
 
+(defn blank-array
+  [xs ys]
+  (vec (repeat ys (vec (repeat xs \.)))))
+
+(defn print-array
+  [data]
+  (doseq [line data]
+    (println (apply str line))))

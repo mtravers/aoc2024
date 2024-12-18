@@ -32,10 +32,14 @@
     (reduce * (vals (dissoc f nil)))))
 
 
-(defn blank-array
-  [xs ys]
-  (vec (repeat ys (vec (repeat xs \.)))))
+(defn array-step
+  [[x y dx dy]]
+  [(mod (+ x (* dx 1)) 101)
+   (mod (+ y (* dy 1)) 103)
+   dx
+   dy])
 
+;;; Could go in utils, parameterized better
 (defn array-from-points
   [points]
   (loop [arry (blank-array 101 103)
@@ -44,19 +48,6 @@
       (recur (au/rset arry (first p) (second p) \*)
              rest)
       arry)))
-
-(defn print-array
-  [data]
-  (doseq [line data]
-    (println (apply str line))))
-
-
-(defn array-step
-  [[x y dx dy]]
-  [(mod (+ x (* dx 1)) 101)
-   (mod (+ y (* dy 1)) 103)
-   dx
-   dy])
 
 (defn biggest-connected-row
   [points]
@@ -73,6 +64,6 @@
   (loop [points data
          i 0]
     (if (> (biggest-connected-row points) 6)
-      (do (print i) (print-array (array-from-points points)))
+      (do (print i) (au/print-array (au/array-from-points points)))
       (recur (map array-step points) (inc i)))))
 
