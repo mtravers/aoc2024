@@ -125,3 +125,16 @@
   [data]
   (doseq [line data]
     (println (apply str line))))
+
+(defn neighbors
+  [[i j]]
+  [[(inc i) j] 
+   [(dec i) j]
+   [i (inc j)]
+   [i (dec j)]])
+
+(def neighbors-v
+  [[1  0] 
+   [-1 0]
+   [0 1]
+   [0 -1]])

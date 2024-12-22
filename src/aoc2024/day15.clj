@@ -95,6 +95,9 @@
     \[ [(inc x) y]
     \] [(dec x) y]))
 
+(declare slide2-v)
+
+;;; Try to slide one half of a block up or down
 (defn slide2-va
   [arr pos v prev]
   #_ (prn :slide-va pos v prev)
@@ -104,7 +107,7 @@
     (case target
       \# nil
       (\[ \]) (when-let [narr (slide2-v arr npos v this)]
-                (au/rset narr pos prev))
+                (au/rset narr pos \.))
       \. (-> arr
              (au/rset npos this)
              (au/rset pos \.)))))
@@ -115,7 +118,9 @@
   (let [other (box-other arr pos)]
     (when-let [narr (slide2-va arr pos v prev)]
       (when-let [narr2 (slide2-va narr other v prev)]
-        (au/rset narr2 pos prev)))))
+        #_ (prn :foo pos other prev)
+        (au/rset narr2 pos prev)
+        #_ (au/rset narr2 other \.)))))
 
 (defn slide2
   [arr pos v]
@@ -136,8 +141,8 @@
 (defn move2
   [arr pos moves]
   (prn :p pos (first moves))
-  (au/print-array (au/rset arr pos \$))
-  (when (bad-array? arr) (throw (ex-info "BAD")))
+  #_ (au/print-array (au/rset arr pos \$))
+  (when (bad-array? arr) (throw (ex-info "BAD" {:p pos})))
   (if (empty? moves)
     arr
     (let [move (first moves)
@@ -154,6 +159,11 @@
 
 (def array (au/adata (ju/file-lines "data/day15-arr-p2x.txt")))
 (def moves "<vv<<^^<<^^")
+(def moves "<^<<<<vv<<^^")
+
+;;; YES this reproduces the bug
+(def array (au/adata (ju/file-lines "data/day15-arr-p2y.txt")))
+(def moves "<<v<>^^<<<<vv<<^^")
 
 (defn p2
   []
