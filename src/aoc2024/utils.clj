@@ -92,6 +92,10 @@
   ([data [x y] v]
    (assoc-in data [y x] v)))
 
+(defn rset*
+  [data points v]
+  (reduce (fn [arr p] (rset arr p v)) data points))
+
 (defn afind
   [arr c]
   (some-indexed
