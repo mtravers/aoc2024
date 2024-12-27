@@ -142,3 +142,22 @@
    [-1 0]
    [0 1]
    [0 -1]])
+
+(defn str-binary
+  [n]
+  (Long/toString n 2))
+
+(def zeros (apply str (repeat 100 \0)))
+
+(defn str-binary-pad
+  [n s]
+  (let [b (str-binary n)]
+    (str (subs zeros 0 (- s (count b))) b)))
+
+(defn read-binary
+  [s]
+  (read-string (str "2r" s)))
+
+(defn print-binary
+  [n]
+  (print (Integer/toString n 2)))
